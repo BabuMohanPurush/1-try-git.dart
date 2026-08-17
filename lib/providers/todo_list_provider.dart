@@ -6,7 +6,8 @@ class TodoListProvider extends ChangeNotifier {
     TodoModel(title: "reading books", isCompleted: true), 
     TodoModel(title: "going to gym", isCompleted: false),
     //TodModel(title:"watching movies", isCompleted: true),
-
+    
+ // 2 items
   ];
 
   void addTodoList(TodoModel todo) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_application/providers/theme_provider.dart';
 import 'package:todo_application/providers/todo_list_provider.dart';
 import 'package:todo_application/screens/add_todo_screen.dart';
 
@@ -9,16 +10,47 @@ class TodoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actionsPadding: EdgeInsets.symmetric(horizontal: 20),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, provider, child) {
+              return GestureDetector(
+                onTap: () {
+                  provider.toogleTheme();
+                },
+                child: Row(
+                  spacing: 10,
+                  children: [
+                    Text(
+                      provider.theme == ThemeData.dark()
+                          ? "Switch to light"
+                          : "Switch to dark",
+                    ),
+                    Icon(
+                      provider.theme == ThemeData.dark()
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Consumer<TodoListProvider>(
         builder: (context, provider, child) {
           return provider.todos.isEmpty
               ? Center(child: Text("Todo list is empty"))
               : ListView.builder(
                   itemCount: provider.todos.length,
+                  //2
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        provider.todos[index].title,
+                        //index = 1
+                        provider.todos[index].title, //todos[1].title
                         style: TextStyle(
                           decoration: provider.todos[index].isCompleted == true
                               ? TextDecoration.lineThrough
